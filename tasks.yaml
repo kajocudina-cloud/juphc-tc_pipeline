@@ -23,3 +23,19 @@ spec:
         echo "***** Running npm install *****"
         npm install
 ---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: jasmine
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: jasminetests
+      image: node:20-buster-slim
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/bash
+        set -e
+        echo "***** Running jasmine tests *****"
+        npx jasmine
